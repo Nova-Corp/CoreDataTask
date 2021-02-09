@@ -32,8 +32,8 @@ class StoreUserDetailsViewController: LBTAFormController {
     
     @objc func didTapAddRandomDataButton() {
         let managedContext = appDelegate?.persistentContainer.viewContext
-        for _ in 0...50 {
-            storeToCodeData(managedContext: managedContext!, firstName: "Ramu", lastName: "Lk", email: "asdf@gmail.com", age: 24)
+        for i in 0...49 {
+            storeToCodeData(managedContext: managedContext!, firstName: "Ramu", lastName: "Lk", email: "asdf@gmail.com", age: i+1)
         }
         try! managedContext?.save()
         self.view.makeToast("50 Random details stored successfully.")

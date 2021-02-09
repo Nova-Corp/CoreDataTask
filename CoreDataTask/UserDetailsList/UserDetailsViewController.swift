@@ -16,7 +16,7 @@ class UserDetailsViewController: UICollectionViewController {
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
-    var userList: [NSManagedObject]?
+    var userList: [NSManagedObject] = [NSManagedObject]()
     
     var fetchingMore = false
     
@@ -41,30 +41,32 @@ class UserDetailsViewController: UICollectionViewController {
         super.viewDidLoad()
         
         userDetailsDataModel.fetchUserListFromDatabase(appDelegate: appDelegate)
-        
     }
 }
 
 extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserListDataSource {
+    
     func didReceiveUserListData(from dataModel: [NSManagedObject]?) {
         
         guard let dataModel = dataModel else { return }
-        userList = dataModel
+        userList.append(contentsOf: dataModel)
         collectionView.reloadData()
+        fetchingMore = false
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        userList?.count ?? 0
+        userList.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let user = userList?[indexPath.item]
+        let user = userList[indexPath.item]
         
-        let userName = "\(user?.value(forKeyPath: "firstName") ?? "") \(user?.value(forKeyPath: "lastName") ?? "")"
+        let userName = "\(user.value(forKeyPath: "firstName") ?? "") \(user.value(forKeyPath: "lastName") ?? "")"
+        let userAge = user.value(forKeyPath: "age") as? Int
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userDetailsView.userDetailsCollectionViewCell.identifier, for: indexPath) as! UserDetailsCollectionViewCell
         cell.userName.text = userName
-        cell.userEmail.text = user?.value(forKeyPath: "email") as? String
-        cell.userAge.text = user?.value(forKeyPath: "age") as? String
+        cell.userEmail.text = user.value(forKeyPath: "email") as? String
+        cell.userAge.text = "\(userAge ?? 0)"
         return cell
     }
     
@@ -73,23 +75,17 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
         return CGSize(width: UIScreen.main.bounds.width, height: 78)
     }
     
-
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
+        let contentHeight = collectionView.contentSize.height
         if contentHeight != 0 {
-            if offsetY > contentHeight - scrollView.frame.height {
+            if offsetY > (contentHeight - scrollView.frame.height) {
+                
                 if !fetchingMore {
-                    beginFetching()
+                    fetchingMore = true
+                    userDetailsDataModel.fetchUserListFromDatabase(appDelegate: appDelegate)
                 }
             }
         }
     }
-    func beginFetching(){
-        fetchingMore = true
-        
-    }
-    
-
-    
 }
