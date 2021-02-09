@@ -17,7 +17,11 @@ enum ValidationError: LocalizedError {
     case invalidCredentials
     case firstNameMustBeEnter
     case lastNameMustBeEnter
+    case lastNameTooLong
+    case lastNameTooShort
     case middleNameMustBeEnter
+    case middleNameTooLong
+    case middleNameTooShort
     case emailMustBeEnter
     case emailNotValid
     case passwordMustBeEnter
@@ -38,6 +42,7 @@ enum ValidationError: LocalizedError {
     case zipCodeMustBeEnter
     case zipCodeMustBeNumeric
     case genderMustBeSelected
+    case ageMustBeNumeric
     
     var errorDescription: String? {
         switch self {
@@ -99,6 +104,16 @@ enum ValidationError: LocalizedError {
                 return "State is too short."
             case .countryTooShort:
                 return "Country is too short."
+            case .ageMustBeNumeric:
+                return "Age must be number."
+            case .lastNameTooLong:
+                return "Your last name is too long."
+            case .lastNameTooShort:
+                return "Your last name is too short."
+            case .middleNameTooLong:
+                return "Your middle name is too long."
+            case .middleNameTooShort:
+                return "Your middle name is too short."
         }
     }
 }

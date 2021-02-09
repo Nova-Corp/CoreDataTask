@@ -11,6 +11,18 @@ import LBTATools
 import DropDown
 
 class SignUpView: UIView {
+    
+    let addUserDetailsButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setImage(#imageLiteral(resourceName: "pen"), for: .normal)
+        return btn
+    }()
+    
+    let viewUserDetailsButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setImage( #imageLiteral(resourceName: "list"), for: .normal)
+        return btn
+    }()
 
     let firstNameTextField = IndentedTextField(placeholder: "First name", padding: 12, cornerRadius: 5, backgroundColor: .white)
     let lastNameTextField = IndentedTextField(placeholder: "Last name", padding: 12, cornerRadius: 5, backgroundColor: .white)
@@ -53,9 +65,11 @@ class SignUpView: UIView {
     
     let signUpButton = UIButton(title: "Sign Up", titleColor: .white, font: .boldSystemFont(ofSize: 16), backgroundColor: #colorLiteral(red: 0.2883880436, green: 0.5055884719, blue: 0.9490465522, alpha: 1))
     
-    func setupSignUpFields(vc: LBTAFormController) {
+    func setupSignUpView(vc: LBTAFormController) {
         
         vc.title = "Sign Up"
+        
+        setupRightNavigationItems(vc: vc)
         
         genderButton.addTarget(self, action: #selector(chooseGender), for: .touchUpInside)
         
@@ -116,5 +130,22 @@ class SignUpView: UIView {
     @objc func chooseGender(){
         chooseGenderDropDown.show()
     }
+    
+    private func setupRightNavigationItems(vc: UIViewController) {
+        vc.navigationItem.rightBarButtonItems = [
+            UIBarButtonItem.customIconBtn(customBtn: addUserDetailsButton),
+            UIBarButtonItem.customIconBtn(customBtn: viewUserDetailsButton),
+        ]
+    }
 
+}
+
+extension UIBarButtonItem {
+    static func customIconBtn(customBtn: UIButton) -> UIBarButtonItem {
+        let messengerBarItem = UIBarButtonItem(customView: customBtn)
+        messengerBarItem.customView?.translatesAutoresizingMaskIntoConstraints = false
+        messengerBarItem.customView?.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        messengerBarItem.customView?.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        return messengerBarItem
+    }
 }

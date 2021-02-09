@@ -21,16 +21,16 @@ struct InputValidationService {
     func validateLastName(_ name: String?) throws -> String {
         guard let name = name else { throw ValidationError.invalidValue }
         guard name.count != 0 else { throw ValidationError.lastNameMustBeEnter }
-        guard name.count > 1 else { throw ValidationError.usernameTooShort }
-        guard name.count < 20 else { throw ValidationError.usernameTooLong }
+        guard name.count > 1 else { throw ValidationError.lastNameTooShort }
+        guard name.count < 20 else { throw ValidationError.lastNameTooLong }
         return name
     }
     
     func validateMiddleName(_ name: String?) throws -> String {
         guard let name = name else { throw ValidationError.invalidValue }
         guard name.count != 0 else { throw ValidationError.middleNameMustBeEnter }
-        guard name.count > 1 else { throw ValidationError.usernameTooShort }
-        guard name.count < 20 else { throw ValidationError.usernameTooLong }
+        guard name.count > 1 else { throw ValidationError.middleNameTooShort }
+        guard name.count < 20 else { throw ValidationError.middleNameTooLong }
         return name
     }
     
@@ -63,7 +63,7 @@ struct InputValidationService {
         return password
     }
     
-    func validateAge(_ date: Date?) throws -> Date {
+    func validateIsAgeAllowed(_ date: Date?) throws -> Date {
         guard let date = date else { throw ValidationError.invalidValue }
         guard date.validateAgeIsAllowed() else { throw ValidationError.ageNotAllowed }
         return date
@@ -108,6 +108,11 @@ struct InputValidationService {
         guard let zipCode = Int(zipCode!) else { throw ValidationError.zipCodeMustBeNumeric }
         guard zipCode > 9999 else { throw ValidationError.zipCodeMustBeEnter }
         return String(zipCode)
+    }
+    
+    func validateAge(_ age: String?) throws -> Int {
+        guard let age = Int(age!) else { throw ValidationError.ageMustBeNumeric }
+        return age
     }
 }
 

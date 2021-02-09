@@ -17,13 +17,24 @@ class SignUpViewController: LBTAFormController {
     
     override func loadView() {
         super.loadView()
-        signUpView.setupSignUpFields(vc: self)
-        
+        signUpView.setupSignUpView(vc: self)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         signUpView.signUpButton.addTarget(self, action: #selector(validateInputFields), for: .touchUpInside)
+        signUpView.addUserDetailsButton.addTarget(self, action: #selector(didTapAddUserButton), for: .touchUpInside)
+        signUpView.viewUserDetailsButton.addTarget(self, action: #selector(didTapViewUserButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapViewUserButton() {
+        self.navigationController?.pushViewController(UserDetailsViewController(), animated: true)
+    }
+    
+    @objc func didTapAddUserButton() {
+        let vc = StoreUserDetailsViewController()
+        vc.signUpViewControllerDelegate = self
+        self.present(vc, animated: true)
     }
     
     
@@ -37,7 +48,7 @@ class SignUpViewController: LBTAFormController {
             let email = try inputValidationService.validateEmail(signUpView.emailTextField.text)
             let password = try inputValidationService.validatePassword(signUpView.passwordTextField.text)
             let confirmPassword = try inputValidationService.validateConfirmPassword(password, signUpView.confirmPasswordTextField.text)
-            let dateOfBirth = try inputValidationService.validateAge(signUpView.datePicker.date)
+            let dateOfBirth = try inputValidationService.validateIsAgeAllowed(signUpView.datePicker.date)
             let addressLine1 = try inputValidationService.validateAddress1(signUpView.addressLine1TextField.text)
             let addressLine2 = try inputValidationService.validateAddress2(signUpView.addressLine2TextField.text)
             let city = try inputValidationService.validateCity(signUpView.cityTextField.text)
@@ -55,7 +66,7 @@ class SignUpViewController: LBTAFormController {
     
 }
 
-extension SignUpViewController {
+extension UIViewController {
     private func present(_ dismissableAlert: UIAlertController) {
         let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel)
         dismissableAlert.addAction(dismissAction)
