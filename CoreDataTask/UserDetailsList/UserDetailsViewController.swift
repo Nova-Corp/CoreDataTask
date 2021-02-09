@@ -50,8 +50,8 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
         
         guard let dataModel = dataModel else { return }
         userList.append(contentsOf: dataModel)
-        collectionView.reloadData()
         fetchingMore = false
+        collectionView.reloadData()
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -79,13 +79,12 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
             return userDetailCell
         }else{
             let spinnerCell = collectionView.dequeueReusableCell(withReuseIdentifier: userDetailsView.spinnerCollectionViewCell.identifier, for: indexPath) as! SpinnerCollectionViewCell
-            
-            if userList.count == 0 {
-                spinnerCell.paginationSpinner.stopAnimating()
-                spinnerCell.paginationSpinner.isHidden = true
-            }else{
+            if fetchingMore {
                 spinnerCell.paginationSpinner.isHidden = false
                 spinnerCell.paginationSpinner.startAnimating()
+            }else{
+                spinnerCell.paginationSpinner.isHidden = true
+                spinnerCell.paginationSpinner.stopAnimating()
             }
             return spinnerCell
         }
@@ -108,6 +107,7 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
             if offsetY > (contentHeight - scrollView.frame.height + 65) {
                 if !fetchingMore {
                     fetchingMore = true
+                    collectionView.reloadData()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         self.userDetailsDataModel.fetchUserListFromDatabase(appDelegate: self.appDelegate)
                     }
