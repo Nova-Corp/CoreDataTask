@@ -11,9 +11,5 @@ import UIKit
 class SpinnerCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var paginationSpinner: UIActivityIndicatorView!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        paginationSpinner.startAnimating()
-    }
-
+    let identifier = "SpinnerCollectionViewCell"
 }

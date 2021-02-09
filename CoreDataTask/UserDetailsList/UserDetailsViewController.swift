@@ -54,36 +54,63 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
         fetchingMore = false
     }
     
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        2
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        userList.count
+        if section == 0 {
+            return userList.count
+        }else{
+            return 1
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let user = userList[indexPath.item]
         
-        let userName = "\(user.value(forKeyPath: "firstName") ?? "") \(user.value(forKeyPath: "lastName") ?? "")"
-        let userAge = user.value(forKeyPath: "age") as? Int
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userDetailsView.userDetailsCollectionViewCell.identifier, for: indexPath) as! UserDetailsCollectionViewCell
-        cell.userName.text = userName
-        cell.userEmail.text = user.value(forKeyPath: "email") as? String
-        cell.userAge.text = "\(userAge ?? 0)"
-        return cell
+        if indexPath.section == 0 {
+            let user = userList[indexPath.item]
+            let userName = "\(user.value(forKeyPath: "firstName") ?? "") \(user.value(forKeyPath: "lastName") ?? "")"
+            let userAge = user.value(forKeyPath: "age") as? Int
+            let userDetailCell = collectionView.dequeueReusableCell(withReuseIdentifier: userDetailsView.userDetailsCollectionViewCell.identifier, for: indexPath) as! UserDetailsCollectionViewCell
+            userDetailCell.userName.text = userName
+            userDetailCell.userEmail.text = user.value(forKeyPath: "email") as? String
+            userDetailCell.userAge.text = "\(userAge ?? 0)"
+            return userDetailCell
+        }else{
+            let spinnerCell = collectionView.dequeueReusableCell(withReuseIdentifier: userDetailsView.spinnerCollectionViewCell.identifier, for: indexPath) as! SpinnerCollectionViewCell
+            
+            if userList.count == 0 {
+                spinnerCell.paginationSpinner.stopAnimating()
+                spinnerCell.paginationSpinner.isHidden = true
+            }else{
+                spinnerCell.paginationSpinner.isHidden = false
+                spinnerCell.paginationSpinner.startAnimating()
+            }
+            return spinnerCell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: UIScreen.main.bounds.width, height: 78)
+        if indexPath.section == 0 {
+            return CGSize(width: UIScreen.main.bounds.width, height: 78)
+        }else{
+            return CGSize(width: UIScreen.main.bounds.width, height: 22)
+        }
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = collectionView.contentSize.height
         if contentHeight != 0 {
-            if offsetY > (contentHeight - scrollView.frame.height) {
-                
+            if offsetY > (contentHeight - scrollView.frame.height + 65) {
                 if !fetchingMore {
                     fetchingMore = true
-                    userDetailsDataModel.fetchUserListFromDatabase(appDelegate: appDelegate)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.userDetailsDataModel.fetchUserListFromDatabase(appDelegate: self.appDelegate)
+                    }
                 }
             }
         }

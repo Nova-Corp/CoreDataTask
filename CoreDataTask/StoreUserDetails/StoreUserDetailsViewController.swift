@@ -28,6 +28,24 @@ class StoreUserDetailsViewController: LBTAFormController {
         storeUserDetailsView.saveButton.addTarget(self, action: #selector(validateInputFields), for: .touchUpInside)
         storeUserDetailsView.viewButton.addTarget(self, action: #selector(didTapViewButton), for: .touchUpInside)
         storeUserDetailsView.addRandomData.addTarget(self, action: #selector(didTapAddRandomDataButton), for: .touchUpInside)
+        storeUserDetailsView.deleteAllData.addTarget(self, action: #selector(didTapDeleteAllDataButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapDeleteAllDataButton() {
+        let managedContext = appDelegate?.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BasicUserDetails")
+        fetchRequest.returnsObjectsAsFaults = false
+        do {
+            let results = try managedContext!.fetch(fetchRequest)
+            for object in results {
+                guard let objectData = object as? NSManagedObject else {continue}
+                managedContext!.delete(objectData)
+                try managedContext?.save()
+                self.view.makeToast("All data deleted successfully.")
+            }
+        } catch let err {
+            self.view.makeToast(err.localizedDescription)
+        }
     }
     
     @objc func didTapAddRandomDataButton() {

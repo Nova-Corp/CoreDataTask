@@ -11,9 +11,12 @@ import UIKit
 class UserDetailsView: UIView {
 
     let userDetailsCollectionViewCell: UserDetailsCollectionViewCell
+    let spinnerCollectionViewCell: SpinnerCollectionViewCell
+    
 
     override init(frame: CGRect) {
         userDetailsCollectionViewCell = UserDetailsCollectionViewCell()
+        spinnerCollectionViewCell = SpinnerCollectionViewCell()
         super.init(frame: frame)
     }
 
@@ -27,15 +30,7 @@ class UserDetailsView: UIView {
         let detailsNib = UINib(nibName: userDetailsCollectionViewCell.identifier, bundle: nil)
         collectionView.register(detailsNib, forCellWithReuseIdentifier: userDetailsCollectionViewCell.identifier)
         
-        let detailsNib = UINib(nibName: userDetailsCollectionViewCell.identifier, bundle: nil)
-        collectionView.register(detailsNib, forCellWithReuseIdentifier: userDetailsCollectionViewCell.identifier)
-    }
-    
-    func footerSpinner() -> UIView {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 100))
-        let spinner = UIActivityIndicatorView()
-        spinner.center = footerView.center
-        footerView.addSubview(spinner)
-        return footerView
+        let spinnerNib = UINib(nibName: spinnerCollectionViewCell.identifier, bundle: nil)
+        collectionView.register(spinnerNib, forCellWithReuseIdentifier: spinnerCollectionViewCell.identifier)
     }
 }
