@@ -1,0 +1,20 @@
+PODS:
+  - DropDown (2.3.13)
+  - LBTATools (1.0.12)
+
+DEPENDENCIES:
+  - DropDown
+  - LBTATools
+
+SPEC REPOS:
+  trunk:
+    - DropDown
+    - LBTATools
+
+SPEC CHECKSUMS:
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
+  LBTATools: 389a901a01b9a56bea5682c40cd6e23530f40015
+
+PODFILE CHECKSUM: ee5360f0ea98edef563ef2b01e2537751e61d4d1
+
+COCOAPODS: 1.8.4
