@@ -16,6 +16,8 @@
 		841115F725D176EB0013FE7C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841115F625D176EB0013FE7C /* SignUpView.swift */; };
 		841115FA25D193850013FE7C /* LocalErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841115F925D193850013FE7C /* LocalErrors.swift */; };
 		841115FC25D1940A0013FE7C /* InputValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841115FB25D1940A0013FE7C /* InputValidationService.swift */; };
+		844519B725D628820086DB0D /* StoreUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844519B625D628820086DB0D /* StoreUserDetailsModel.swift */; };
+		844519C625D63B3C0086DB0D /* BasicUserDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844519C325D63B3C0086DB0D /* BasicUserDetails+CoreDataClass.swift */; };
 		849AC4C425D21CF70008B0FF /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AC4C325D21CF70008B0FF /* SignUpModel.swift */; };
 		849AC4C725D2300D0008B0FF /* StoreUserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AC4C625D2300D0008B0FF /* StoreUserDetailsViewController.swift */; };
 		849AC4C925D230330008B0FF /* StoreUserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AC4C825D230330008B0FF /* StoreUserDetailsView.swift */; };
@@ -44,6 +46,8 @@
 		841115F625D176EB0013FE7C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		841115F925D193850013FE7C /* LocalErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalErrors.swift; sourceTree = "<group>"; };
 		841115FB25D1940A0013FE7C /* InputValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputValidationService.swift; sourceTree = "<group>"; };
+		844519B625D628820086DB0D /* StoreUserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserDetailsModel.swift; sourceTree = "<group>"; };
+		844519C325D63B3C0086DB0D /* BasicUserDetails+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BasicUserDetails+CoreDataClass.swift"; path = "/Users/admin/Documents/Example_Ios_App/CoreDataTask/CoreDataTask/StoreUserDetails/StoreUserDetailsModel/BasicUserDetails+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		849AC4C325D21CF70008B0FF /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
 		849AC4C625D2300D0008B0FF /* StoreUserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserDetailsViewController.swift; sourceTree = "<group>"; };
 		849AC4C825D230330008B0FF /* StoreUserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserDetailsView.swift; sourceTree = "<group>"; };
@@ -141,9 +145,19 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		844519C225D632960086DB0D /* StoreUserDetailsModel */ = {
+			isa = PBXGroup;
+			children = (
+				844519C325D63B3C0086DB0D /* BasicUserDetails+CoreDataClass.swift */,
+				844519B625D628820086DB0D /* StoreUserDetailsModel.swift */,
+			);
+			path = StoreUserDetailsModel;
+			sourceTree = "<group>";
+		};
 		849AC4C525D22FB80008B0FF /* StoreUserDetails */ = {
 			isa = PBXGroup;
 			children = (
+				844519C225D632960086DB0D /* StoreUserDetailsModel */,
 				849AC4C625D2300D0008B0FF /* StoreUserDetailsViewController.swift */,
 				849AC4C825D230330008B0FF /* StoreUserDetailsView.swift */,
 			);
@@ -326,7 +340,9 @@
 				849AC4C425D21CF70008B0FF /* SignUpModel.swift in Sources */,
 				841115FA25D193850013FE7C /* LocalErrors.swift in Sources */,
 				841115DB25D172330013FE7C /* AppDelegate.swift in Sources */,
+				844519B725D628820086DB0D /* StoreUserDetailsModel.swift in Sources */,
 				841115DD25D172330013FE7C /* SceneDelegate.swift in Sources */,
+				844519C625D63B3C0086DB0D /* BasicUserDetails+CoreDataClass.swift in Sources */,
 				849AC4CB25D23AC60008B0FF /* Toast.swift in Sources */,
 				849AC4D325D2467E0008B0FF /* UserDetailsCollectionViewCell.swift in Sources */,
 				849AC4D825D24D930008B0FF /* UserDetailsModel.swift in Sources */,

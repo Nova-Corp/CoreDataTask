@@ -14,9 +14,13 @@ class UserDetailsViewController: UICollectionViewController {
     let userDetailsView = UserDetailsView()
     let userDetailsDataModel = UserDetailsDataModel()
     
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    let managedContext: NSManagedObjectContext = {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let managedContext = appDelegate?.persistentContainer.viewContext
+        return managedContext!
+    }()
     
-    var userList: [NSManagedObject] = [NSManagedObject]()
+    var userList: [BasicUserDetails] = [BasicUserDetails]()
     
     var fetchingMore = false
     
@@ -40,13 +44,17 @@ class UserDetailsViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        userDetailsDataModel.fetchUserListFromDatabase(appDelegate: appDelegate)
+        userDetailsDataModel.fetchUserListFromDatabase(managedContext: managedContext)
+    }
+    
+    deinit {
+        print("\(UserDetailsViewController.self) Deinitialized.")
     }
 }
 
 extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserListDataSource {
     
-    func didReceiveUserListData(from dataModel: [NSManagedObject]?) {
+    func didReceiveUserListData(from dataModel: [BasicUserDetails]?) {
         
         guard let dataModel = dataModel else { return }
         userList.append(contentsOf: dataModel)
@@ -55,7 +63,11 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        if fetchingMore {
+            return 2
+        }else{
+            return 1
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -79,13 +91,7 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
             return userDetailCell
         }else{
             let spinnerCell = collectionView.dequeueReusableCell(withReuseIdentifier: userDetailsView.spinnerCollectionViewCell.identifier, for: indexPath) as! SpinnerCollectionViewCell
-            if fetchingMore {
-                spinnerCell.paginationSpinner.isHidden = false
-                spinnerCell.paginationSpinner.startAnimating()
-            }else{
-                spinnerCell.paginationSpinner.isHidden = true
-                spinnerCell.paginationSpinner.stopAnimating()
-            }
+            spinnerCell.paginationSpinner.startAnimating()
             return spinnerCell
         }
         
@@ -100,6 +106,8 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
         }
     }
     
+    
+    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = collectionView.contentSize.height
@@ -109,7 +117,7 @@ extension UserDetailsViewController: UICollectionViewDelegateFlowLayout, UserLis
                     fetchingMore = true
                     collectionView.reloadData()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        self.userDetailsDataModel.fetchUserListFromDatabase(appDelegate: self.appDelegate)
+                        self.userDetailsDataModel.fetchUserListFromDatabase(managedContext: self.managedContext)
                     }
                 }
             }

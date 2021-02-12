@@ -11,15 +11,15 @@ import Foundation
 struct InputValidationService {
     
     func validateFirstName(_ name: String?) throws -> String {
-        guard let name = name else { throw ValidationError.invalidValue }
+        guard let name = name else { throw ValidationError.firstNameMustBeEnter }
         guard name.count != 0 else { throw ValidationError.firstNameMustBeEnter }
-        guard name.count > 1 else { throw ValidationError.usernameTooShort }
-        guard name.count < 20 else { throw ValidationError.usernameTooLong }
+        guard name.count > 1 else { throw ValidationError.firstNameTooShort }
+        guard name.count < 20 else { throw ValidationError.firstNameTooLong }
         return name
     }
     
     func validateLastName(_ name: String?) throws -> String {
-        guard let name = name else { throw ValidationError.invalidValue }
+        guard let name = name else { throw ValidationError.lastNameMustBeEnter }
         guard name.count != 0 else { throw ValidationError.lastNameMustBeEnter }
         guard name.count > 1 else { throw ValidationError.lastNameTooShort }
         guard name.count < 20 else { throw ValidationError.lastNameTooLong }
@@ -27,7 +27,7 @@ struct InputValidationService {
     }
     
     func validateMiddleName(_ name: String?) throws -> String {
-        guard let name = name else { throw ValidationError.invalidValue }
+        guard let name = name else { throw ValidationError.middleNameMustBeEnter }
         guard name.count != 0 else { throw ValidationError.middleNameMustBeEnter }
         guard name.count > 1 else { throw ValidationError.middleNameTooShort }
         guard name.count < 20 else { throw ValidationError.middleNameTooLong }
@@ -40,7 +40,7 @@ struct InputValidationService {
     }
     
     func validateEmail(_ email: String?) throws -> String {
-        guard let email = email else { throw ValidationError.invalidValue }
+        guard let email = email else { throw ValidationError.emailMustBeEnter }
         guard email.count != 0 else { throw ValidationError.emailMustBeEnter }
         guard email.isValidEmail() else { throw ValidationError.emailNotValid }
         return email
@@ -48,7 +48,7 @@ struct InputValidationService {
     
     
     func validatePassword(_ password: String?) throws -> String {
-        guard let password = password else { throw ValidationError.invalidValue }
+        guard let password = password else { throw ValidationError.passwordMustBeEnter }
         guard password.count != 0 else { throw ValidationError.passwordMustBeEnter }
         guard password.count > 8 else { throw ValidationError.weakPassword }
         guard password.count < 20 else { throw ValidationError.passwordTooLong }
@@ -57,48 +57,48 @@ struct InputValidationService {
     }
     
     func validateConfirmPassword(_ password: String?, _ confirmPassword: String?) throws -> String {
-        guard let password = password else { throw ValidationError.invalidValue }
+        guard let password = password else { throw ValidationError.confirmPasswordMustBeEnter }
         guard password.count != 0 else { throw ValidationError.confirmPasswordMustBeEnter }
         guard password == confirmPassword else { throw ValidationError.passwordNotSame }
         return password
     }
     
     func validateIsAgeAllowed(_ date: Date?) throws -> Date {
-        guard let date = date else { throw ValidationError.invalidValue }
+        guard let date = date else { throw ValidationError.ageNotAllowed }
         guard date.validateAgeIsAllowed() else { throw ValidationError.ageNotAllowed }
         return date
     }
     
     func validateAddress1(_ address: String?) throws -> String {
-        guard let address = address else { throw ValidationError.invalidValue }
+        guard let address = address else { throw ValidationError.address1MustBeEnter }
         guard address.count != 0 else { throw ValidationError.address1MustBeEnter }
         guard address.count > 2 else { throw ValidationError.address1TooShort }
         return address
     }
     
     func validateAddress2(_ address: String?) throws -> String {
-        guard let address = address else { throw ValidationError.invalidValue }
+        guard let address = address else { throw ValidationError.address2MustBeEnter }
         guard address.count != 0 else { throw ValidationError.address2MustBeEnter }
         guard address.count > 2 else { throw ValidationError.address2TooShort }
         return address
     }
     
     func validateCity(_ city: String?) throws -> String {
-        guard let city = city else { throw ValidationError.invalidValue }
+        guard let city = city else { throw ValidationError.address2MustBeEnter }
         guard city.count != 0 else { throw ValidationError.address2MustBeEnter }
         guard city.count > 2 else { throw ValidationError.address2TooShort }
         return city
     }
     
     func validateState(_ state: String?) throws -> String {
-        guard let state = state else { throw ValidationError.invalidValue }
+        guard let state = state else { throw ValidationError.stateMustBeEnter }
         guard state.count != 0 else { throw ValidationError.stateMustBeEnter }
         guard state.count > 2 else { throw ValidationError.stateTooShort }
         return state
     }
     
     func validateCountry(_ country: String?) throws -> String {
-        guard let country = country else { throw ValidationError.invalidValue }
+        guard let country = country else { throw ValidationError.countryMustBeEnter }
         guard country.count != 0 else { throw ValidationError.countryMustBeEnter }
         guard country.count > 2 else { throw ValidationError.countryTooShort }
         return country

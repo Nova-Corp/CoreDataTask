@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 protocol UserListDataSource {
-    func didReceiveUserListData(from dataModel: [NSManagedObject]? )
+    func didReceiveUserListData(from dataModel: [BasicUserDetails]? )
 }
 
 class UserDetailsDataModel {
@@ -19,19 +19,20 @@ class UserDetailsDataModel {
     var fetchOffset = 0
     var fetchLimit = 10
     
-    func fetchUserListFromDatabase(appDelegate: AppDelegate?) {
-        let managedContext = appDelegate?.persistentContainer.viewContext
+    func fetchUserListFromDatabase(managedContext: NSManagedObjectContext?) {
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BasicUserDetails")
+        let fetchRequest: NSFetchRequest<BasicUserDetails> = BasicUserDetails.fetchRequest()
+        
         fetchRequest.fetchOffset = fetchOffset
         fetchRequest.fetchLimit = fetchLimit
+        
         let sectionSortDescriptor = NSSortDescriptor(key: "age", ascending: true)
         let sortDescriptors = [sectionSortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
         
         do {
             let result = try managedContext?.fetch(fetchRequest)
-            delegate?.didReceiveUserListData(from: result as? [NSManagedObject])
+            delegate?.didReceiveUserListData(from: result)
             
             fetchOffset = fetchOffset + 10
         } catch let err {

@@ -12,8 +12,8 @@ enum ValidationError: LocalizedError {
     case invalidValue
     case passwordTooLong
     case passwordTooShort
-    case usernameTooLong
-    case usernameTooShort
+    case firstNameTooLong
+    case firstNameTooShort
     case invalidCredentials
     case firstNameMustBeEnter
     case lastNameMustBeEnter
@@ -52,10 +52,10 @@ enum ValidationError: LocalizedError {
                 return "Your password is too long."
             case .passwordTooShort:
                 return "Your password is too short."
-            case .usernameTooLong:
-                return "Your username is too long."
-            case .usernameTooShort:
-                return "Your username is too short."
+            case .firstNameTooLong:
+                return "Your first name is too long."
+            case .firstNameTooShort:
+                return "Your first name is too short."
             case .invalidCredentials:
                 return "Incorrect username or password. Please try again."
             case .firstNameMustBeEnter:

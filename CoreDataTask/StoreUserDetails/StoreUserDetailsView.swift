@@ -19,16 +19,20 @@ class StoreUserDetailsView: UIView {
     let saveButton = UIButton(title: "Save", titleColor: .white, font: .boldSystemFont(ofSize: 16), backgroundColor: #colorLiteral(red: 0.2883880436, green: 0.5055884719, blue: 0.9490465522, alpha: 1))
     let viewButton = UIButton(title: "View", titleColor: .white, font: .boldSystemFont(ofSize: 16), backgroundColor: #colorLiteral(red: 0.2883880436, green: 0.5055884719, blue: 0.9490465522, alpha: 1))
     
-    let addRandomData = UIButton(title: "Add 50 random rata", titleColor: .white, font: .boldSystemFont(ofSize: 16), backgroundColor: #colorLiteral(red: 0.2883880436, green: 0.5055884719, blue: 0.9490465522, alpha: 1))
+    let addRandomDataButton = UIButton(title: "Add 50 random rata", titleColor: .white, font: .boldSystemFont(ofSize: 16), backgroundColor: #colorLiteral(red: 0.2883880436, green: 0.5055884719, blue: 0.9490465522, alpha: 1))
     
-    let deleteAllData = UIButton(title: "Delete all data", titleColor: .white, font: .boldSystemFont(ofSize: 16), backgroundColor: #colorLiteral(red: 0.2883880436, green: 0.5055884719, blue: 0.9490465522, alpha: 1))
+    let deleteAllDataButton = UIButton(title: "Delete all data", titleColor: .white, font: .boldSystemFont(ofSize: 16), backgroundColor: #colorLiteral(red: 0.2883880436, green: 0.5055884719, blue: 0.9490465522, alpha: 1))
     
     func setupDetailsInputFields(vc: LBTAFormController) {
         
-        let actionButtons = stack(saveButton, viewButton, spacing: 16, distribution: .fillEqually)
+        let actionButtonsStack: UIStackView = {
+            let btnStack = stack(saveButton, viewButton, spacing: 16, distribution: .fillEqually)
+            btnStack.axis = .horizontal
+            btnStack.alignment = .center
+            return btnStack
+        }()
         
-        actionButtons.axis = .horizontal
-        actionButtons.alignment = .center
+        
         [
             firstNameTextField,
             lastNameTextField,
@@ -43,9 +47,9 @@ class StoreUserDetailsView: UIView {
                     lastNameTextField,
                     ageTextField,
                     emailTextField,
-                    actionButtons,
-                    addRandomData,
-                    deleteAllData,
+                    actionButtonsStack,
+                    addRandomDataButton,
+                    deleteAllDataButton,
                     spacing: 16
                 ).withMargins(.init(top: 16, left: 16, bottom: 16, right: 16))
     }

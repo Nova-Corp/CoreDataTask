@@ -59,10 +59,74 @@ class SignUpViewController: LBTAFormController {
             self.presentAlert(with: "Welcome \(firstName) \(lastName)")
             
         } catch let err {
+            switch err {
+            case ValidationError.firstNameTooLong,
+                 ValidationError.firstNameTooShort,
+                 ValidationError.firstNameMustBeEnter:
+                print("First name error.")
+                
+            case ValidationError.lastNameTooLong,
+                 ValidationError.lastNameTooShort,
+                 ValidationError.lastNameMustBeEnter:
+                print("Last name error.")
+            
+            case ValidationError.middleNameTooLong,
+                 ValidationError.middleNameTooShort,
+                 ValidationError.middleNameMustBeEnter:
+                 print("Middle name error.")
+                
+            case ValidationError.genderMustBeSelected:
+                print("Gender error.")
+                
+            case ValidationError.emailNotValid,
+                ValidationError.emailMustBeEnter:
+                print("Email error.")
+                
+            case ValidationError.weakPassword,
+                ValidationError.passwordTooLong,
+                ValidationError.passwordTooShort,
+                ValidationError.passwordMustBeEnter:
+                print("Password error.")
+                
+            case ValidationError.passwordNotSame,
+                ValidationError.confirmPasswordMustBeEnter:
+                print("Confirm password error.")
+                
+            case ValidationError.ageNotAllowed:
+                print("Age error.")
+                
+            case ValidationError.address1TooShort,
+                 ValidationError.address1MustBeEnter:
+                print("Address 1 error.")
+                
+            case ValidationError.address2TooShort,
+                ValidationError.address2MustBeEnter:
+                print("Address 2 error.")
+                
+            case ValidationError.cityTooShort,
+                ValidationError.cityMustBeEnter:
+                print("City error.")
+                
+            case ValidationError.stateTooShort,
+                ValidationError.stateMustBeEnter:
+                print("State error.")
+                
+            case ValidationError.countryTooShort,
+                ValidationError.countryMustBeEnter:
+                print("Country error.")
+                
+            case ValidationError.zipCodeMustBeEnter,
+                ValidationError.zipCodeMustBeNumeric:
+                print("Zip code error.")
+            default:
+                print("Some thing went wrong.")
+            }
             self.present(err)
         }
     }
-    
+    deinit {
+        print("\(SignUpViewController.self) Deinitialized.")
+    }
     
 }
 
